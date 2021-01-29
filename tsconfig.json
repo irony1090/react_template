@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext",
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "suppressImplicitAnyIndexErrors": true, //배열에 string이 가능하도록 예) window[next]
+    "baseUrl": "."
+    // "paths": {
+    //   "@/components/*": ["components/*"]
+    // },
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    // "node_modules/@react-three/drei",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/_app.jsx"
+  ]
+}
