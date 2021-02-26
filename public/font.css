@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+@font-face{
+  font-family: "noto";
+  src:url("http://115.71.236.218/storage/font/woff/NotoSansKR-Black-Hestia.woff") format('woff'),
+      url("http://115.71.236.218/storage/font/ttf/NotoSansKR-Black-Hestia.ttf") format("ttf"),
+      url("http://115.71.236.218/storage/font/otf/NotoSansKR-Black-Hestia.otf") format("otf");
+  font-style:normal;
+  font-weight: 800;
+  
+}
+@font-face{
+  font-family: "noto";
+  src:url("http://115.71.236.218/storage/font/woff/NotoSansKR-Bold-Hestia.woff") format('woff'),
+      url("http://115.71.236.218/storage/font/ttf/NotoSansKR-Bold-Hestia.ttf") format("ttf"),
+      url("http://115.71.236.218/storage/font/otf/NotoSansKR-Bold-Hestia.otf") format("otf");
+  font-style:normal;
+  font-weight: bold;
+}
+@font-face{
+  font-family: "noto";
+  src:url("http://115.71.236.218/storage/font/woff/NotoSansKR-Medium-Hestia.woff") format('woff'),
+      url("http://115.71.236.218/storage/font/ttf/NotoSansKR-Medium-Hestia.ttf") format("ttf"),
+      url("http://115.71.236.218/storage/font/otf/NotoSansKR-Medium-Hestia.otf") format("otf");
+  font-style:normal;
+  font-weight: 500;
+}
+
+@font-face{
+  font-family: "noto";
+  src:url("http://115.71.236.218/storage/font/woff/NotoSansKR-Regular-Hestia.woff") format('woff'),
+      url("http://115.71.236.218/storage/font/ttf/NotoSansKR-Regular-Hestia.ttf") format("ttf"),
+      url("http://115.71.236.218/storage/font/otf/NotoSansKR-Regular-Hestia.otf") format("ttf");
+  font-style:normal;
+  font-weight: 400;
+}
+@font-face{
+  font-family: "noto";
+  src:url("http://115.71.236.218/storage/font/woff/NotoSansKR-Light-Hestia.woff") format('woff'),
+      url("http://115.71.236.218/storage/font/ttf/NotoSansKR-Light-Hestia.ttf") format("ttf"),
+      url("http://115.71.236.218/storage/font/otf/NotoSansKR-Light-Hestia.otf") format("otf");
+  font-style:normal;
+  font-weight: 300;
+}
+@font-face{
+  font-family: "noto";
+  src:url("http://115.71.236.218/storage/font/woff/NotoSansKR-DemiLight-Hestia.woff") format('woff'),
+      url("http://115.71.236.218/storage/font/ttf/NotoSansKR-DemiLight-Hestia.ttf") format("ttf"),
+      url("http://115.71.236.218/storage/font/otf/NotoSansKR-DemiLight-Hestia.otf") format("otf");
+  font-style:normal;
+  font-weight: 100;
+}
+@font-face{
+  font-family: "noto";
+  src:url("http://115.71.236.218/storage/font/woff/NotoSansKR-Thin-Hestia.woff") format('woff'),
+      url("http://115.71.236.218/storage/font/ttf/NotoSansKR-Thin-Hestia.ttf") format("ttf"),
+      url("http://115.71.236.218/storage/font/otf/NotoSansKR-Thin-Hestia.otf") format("otf");
+  font-style:normal;
+  font-weight: 200;
+}
+
+
+@font-face{
+  font-family: "roboto";
+  src:url("http://115.71.236.218/storage/font/woff2/Roboto-Bold.woff2") format('woff2'),
+      url("http://115.71.236.218/storage/font/woff/Roboto-Bold.woff") format("woff"),
+      url("http://115.71.236.218/storage/font/otf/Roboto-Bold.otf") format("oft");
+  font-style: normal;
+  font-weight: bold;
+}
+@font-face{
+  font-family: "roboto";
+  src:url("http://115.71.236.218/storage/font/woff2/Roboto-Medium.woff2") format('woff2'),
+      url("http://115.71.236.218/storage/font/woff/Roboto-Medium.woff") format("woff"),
+      url("http://115.71.236.218/storage/font/otf/Roboto-Medium.otf") format("oft");
+  font-style: normal;
+  font-weight: 500;
+}
+@font-face{
+  font-family: "roboto";
+  src:url("http://115.71.236.218/storage/font/woff2/Roboto-Regular.woff2") format('woff2'),
+      url("http://115.71.236.218/storage/font/woff/Roboto-Regular.woff") format("woff"),
+      url("http://115.71.236.218/storage/font/otf/Roboto-Regular.otf") format("oft");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face{
+  font-family: "roboto";
+  src:url("http://115.71.236.218/storage/font/woff2/Roboto-Light.woff2") format('woff2'),
+      url("http://115.71.236.218/storage/font/woff/Roboto-Light.woff") format("woff"),
+      url("http://115.71.236.218/storage/font/otf/Roboto-Light.otf") format("oft");
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face{
+  font-family: "roboto";
+  src:url("http://115.71.236.218/storage/font/woff2/Roboto-Thin.woff2") format('woff2'),
+      url("http://115.71.236.218/storage/font/woff/Roboto-Thin.woff") format("woff"),
+      url("http://115.71.236.218/storage/font/otf/Roboto-Thin.otf") format("oft");
+  font-style: normal;
+  font-weight: 100;
+}
+
+
+html {
+  font-family: "roboto";
+}

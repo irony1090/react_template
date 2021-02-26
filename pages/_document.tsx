@@ -10,11 +10,13 @@ export default class MyDocument extends Document {
         <Head>
           {/* PWA primary color */}
           {/* <meta name="theme-color" content={theme.palette.primary.main} /> */}
-          <link rel="stylesheet"
-            href="/static/font.css"
-          />
+          {/* <link rel="stylesheet"
+            href="/public/font.css"
+          /> */}
           {/* <link rel="shortcut icon" href={`${process.env.NEXT_PUBLIC_ACTIVE_IMG_URL}/static/img/favicon.ico`}></link> */}
           <link rel="shortcut icon" href={`/static/img/favicon.png`}></link>
+          {/* <script src="https://developers.kakao.com/sdk/js/kakao.min.js" /> */}
+          {/* <script type="text/javascript" src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JS_KEY}&autoload=false&libraries=services,clusterer,drawing`}></script> */}
 
           {/* <link rel="stylesheet" href={`http://192.168.0.39:9090/storage/font/otf/NotoSansKR-Black-Hestia.otf`}/> */}
         </Head>

@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, ChangeEvent } from 'react'
+import { FC, useState, useEffect, ChangeEvent } from 'react';
 
 // import {useSelector} from 'react-redux'
 // import {rootState} from 'reducers'
@@ -9,9 +9,11 @@ import {
   Button,
   TextField,
   makeStyles,
-  Typography
-} from '@material-ui/core'
-import {Todo} from 'recoilStates/todo'
+  Typography,
+} from '@material-ui/core';
+import {Todo} from 'recoilStates/todo';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { secondTheme } from 'theme/theme';
 // import {
 //   Todo
 // } from 'reducers/todo/todoTypes'
@@ -34,7 +36,10 @@ const TodoItem:FC<TodoPropsDTO> = ({todo, onSubmit, onModify, onCancel, onDelete
 
   return (
     <Grid container spacing={2}>
-      {viewOrEdit}
+      <ThemeProvider theme={secondTheme}>
+        {viewOrEdit}
+
+      </ThemeProvider>
     </Grid>
   )
 }

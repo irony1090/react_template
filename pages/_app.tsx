@@ -16,13 +16,12 @@ import { Components } from 'reducers/app/appTypes';
 import { wrapper } from 'reducers/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from 'reducers';
+import 'public/font.css';
 
 // import 'theme/main.css'
 
 export type CommProps = {
 }
-
-
 
 const MyApp = (props: AppProps<CommProps>) => {
   const { Component, pageProps } = props;
