@@ -19,28 +19,29 @@ const LineSwiper:FC<LineSwiperProps> = ({
 }) => {
   const classes = useLineSwiperStyles();
   const boxClass = clsx(classes.box, className)
-  const [boxStyle, setBoxStyle] = useState<CSSProperties>({})
+  // const [boxStyle, setBoxStyle] = useState<CSSProperties>({})
   const count = Children.count(children);
 
-  const firstItemRef = useRef<HTMLDivElement>(null);
+  // const firstItemRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if(!firstItemRef.current) return;
-    setBoxStyle({
-      height: firstItemRef.current.offsetHeight
-    })
-  }, [firstItemRef.current, refresh])
+  // useEffect(() => {
+  //   if(!firstItemRef.current) return;
+  //   setBoxStyle({
+  //     height: firstItemRef.current.offsetHeight
+  //   })
+  // }, [firstItemRef.current, refresh])
 
-  
+  const select = Children.toArray(children)[index];
   // return(
   //   <Item
   //     selfKey={0} index={index} count={count}
   //   ></Item>
   // )
-  return (<Box {...boxProps} className={boxClass} style={boxStyle}>
+  return (<Box {...boxProps} data-target="lineSwiper" className={boxClass} >
+    <HideBox>{select}</HideBox>
     {Children.map(children, (c, i) => 
       <Item 
-        ref={i === 0 ? firstItemRef : undefined}
+        // ref={i === 0 ? firstItemRef : undefined}
         key={i} 
         selfKey={i} index={index} count={count}
       >{c}</Item>)
@@ -51,6 +52,13 @@ const LineSwiper:FC<LineSwiperProps> = ({
 export default LineSwiper;
 
 
+const useHideBoxStyles = makeStyles(_ => ({
+  box: { opacity: 0 },
+}))
+const HideBox:FC = ({children}) => {
+  const classes = useHideBoxStyles();
+  return ( <Box className={classes.box} data-hide="">{children}</Box> )
+}
 
 type ItemProps = {
   index: number,
@@ -86,7 +94,7 @@ const useItemStlyes = makeStyles( _theme => ({
   }
 }))
 
-const Item = forwardRef<HTMLDivElement, ItemProps>(({children, index: index_, selfKey, count}, ref) => {
+const Item:FC<ItemProps> = ({children, index: index_, selfKey, count}) => {
   const classes = useItemStlyes();
   const index = index_ % count;
   const view = `view-${getView(index, selfKey, count)}`;
@@ -96,22 +104,40 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({children, index: index_, se
     {[`orientation-${getOrientation(index, selfKey, count)}`]: view === 'view-wait'}
   )
 
-  if(!ref)
-    return (<Box className={itemClass} display="inline-block" width="100%">
-      <Box className="itemWrapper">
-        {children}
-      </Box>
-    </Box>)
-  else  
-    return (<RootRef rootRef={ref}>
-      <Box className={itemClass} display="inline-block" width="100%">
-        <Box className="itemWrapper">
-          {children}
-        </Box>
-      </Box>
-    </RootRef> )
+  return (<Box className={itemClass} display="inline-block" width="100%">
+    <Box className="itemWrapper">
+      {children}
+    </Box>
+  </Box>)
     
-})
+}
+
+// const Item = forwardRef<HTMLDivElement, ItemProps>(({children, index: index_, selfKey, count}, ref) => {
+//   const classes = useItemStlyes();
+//   const index = index_ % count;
+//   const view = `view-${getView(index, selfKey, count)}`;
+//   const itemClass = clsx(
+//     classes.item, 
+//     view, 
+//     {[`orientation-${getOrientation(index, selfKey, count)}`]: view === 'view-wait'}
+//   )
+
+//   if(!ref)
+//     return (<Box className={itemClass} display="inline-block" width="100%">
+//       <Box className="itemWrapper">
+//         {children}
+//       </Box>
+//     </Box>)
+//   else  
+//     return (<RootRef rootRef={ref}>
+//       <Box className={itemClass} display="inline-block" width="100%">
+//         <Box className="itemWrapper">
+//           {children}
+//         </Box>
+//       </Box>
+//     </RootRef> )
+    
+// })
 
 const getView = (index: number, selfKey: number, count: number):string => {
   if(index === selfKey){

@@ -26,7 +26,8 @@ import {
   DialogActions,
   DialogContent,
   makeStyles,
-  Grid
+  Grid,
+  Box
 } from '@material-ui/core'
 
 import {defButtonProps} from 'theme/theme'
@@ -34,6 +35,10 @@ import {defButtonProps} from 'theme/theme'
 import {clone} from 'src/util'
 import { isMoment } from 'moment';
 import moment from 'moment';
+
+import AspectRatioBox from 'components/shape/aspectRatioBox';
+import LineSwiper from 'components/slider/lineSwiper';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) =>({
   container: {
@@ -65,6 +70,7 @@ const Index:NextPage = () => {
   const setTempList = useSetRecoilState(todoTempListAtom);
   // const {list} = useSelector((state:rootState) => state.TodoReducer);
   // const dispatch = useDispatch();
+  const [index, setIndex] = useState<number>(0);
 
 
   const onSave = () => 
@@ -74,10 +80,27 @@ const Index:NextPage = () => {
   
 
   return <Main>
-    
+    <Box width="250px" style={{margin: '0 auto'}}>
+      <LineSwiper index={index} onClick={_ => setIndex(index+1)} >
+        <AspectRatioBox width="250px" style={{backgroundColor:'red'}} aspectRatio={0.5625}>
+          첫번째
+        </AspectRatioBox>
+        <AspectRatioBox width="250px" style={{backgroundColor:'yellow'}} aspectRatio={0.5625}>
+          두번째
+        </AspectRatioBox>
+        <AspectRatioBox width="250px" style={{backgroundColor:'green'}} aspectRatio={0.5625}>
+          세번째
+        </AspectRatioBox>
+        <AspectRatioBox width="250px" style={{backgroundColor:'magenta'}} aspectRatio={0.5625}>
+          4번째
+        </AspectRatioBox>
+      </LineSwiper>
+    </Box>
+
+
     <Dialog 
       className={classes.container}
-      open={true} 
+      open={false} 
       scroll="body" 
     >
       
@@ -110,7 +133,7 @@ const Index:NextPage = () => {
           </Button>
         </Grid>
       </DialogActions>
-
+      
     </Dialog>
   </Main>
 }
