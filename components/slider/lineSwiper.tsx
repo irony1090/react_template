@@ -1,6 +1,6 @@
-import { Box, BoxProps, makeStyles, RootRef } from "@material-ui/core";
+import { Box, BoxProps, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import { Children, FC, useEffect, useRef, forwardRef, useState, CSSProperties } from "react";
+import { Children, CSSProperties, FC } from "react";
 
 
 interface LineSwiperProps extends BoxProps {
@@ -14,50 +14,35 @@ const useLineSwiperStyles = makeStyles(_theme => ({
   }
 }))
 const LineSwiper:FC<LineSwiperProps> = ({
-  children, index, className, refresh=0,
+  children, index:index_, className, refresh=0,
   ...boxProps
 }) => {
   const classes = useLineSwiperStyles();
   const boxClass = clsx(classes.box, className)
-  // const [boxStyle, setBoxStyle] = useState<CSSProperties>({})
   const count = Children.count(children);
+  const index = index_ < 0 ? count-1 : index_ % count;
 
-  // const firstItemRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   if(!firstItemRef.current) return;
-  //   setBoxStyle({
-  //     height: firstItemRef.current.offsetHeight
-  //   })
-  // }, [firstItemRef.current, refresh])
-
-  const select = Children.toArray(children)[index];
-  // return(
-  //   <Item
-  //     selfKey={0} index={index} count={count}
-  //   ></Item>
-  // )
-  return (<Box {...boxProps} data-target="lineSwiper" className={boxClass} >
+  const items = Children.toArray(children);
+  const select = items[index];
+  
+  return (<Box {...boxProps} className={boxClass} >
     <HideBox>{select}</HideBox>
-    {Children.map(children, (c, i) => 
-      <Item 
-        // ref={i === 0 ? firstItemRef : undefined}
-        key={i} 
-        selfKey={i} index={index} count={count}
-      >{c}</Item>)
-    }
+    {items.map( 
+      (c, i) => 
+        <Item 
+          key={i} 
+          selfKey={i} index={index} count={count}
+        >{c}</Item>
+    )}
   </Box>)
 }
 
 export default LineSwiper;
 
 
-const useHideBoxStyles = makeStyles(_ => ({
-  box: { opacity: 0 },
-}))
 const HideBox:FC = ({children}) => {
-  const classes = useHideBoxStyles();
-  return ( <Box className={classes.box} data-hide="">{children}</Box> )
+  const style:CSSProperties = {opacity: 0};
+  return ( <div style={style} >{children}</div> )
 }
 
 type ItemProps = {
@@ -99,8 +84,7 @@ const Item:FC<ItemProps> = ({children, index: index_, selfKey, count}) => {
   const index = index_ % count;
   const view = `view-${getView(index, selfKey, count)}`;
   const itemClass = clsx(
-    classes.item, 
-    view, 
+    classes.item, view, 
     {[`orientation-${getOrientation(index, selfKey, count)}`]: view === 'view-wait'}
   )
 

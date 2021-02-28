@@ -33,9 +33,6 @@ import {
 import {defButtonProps} from 'theme/theme'
 
 import {clone} from 'src/util'
-import { isMoment } from 'moment';
-import moment from 'moment';
-
 import AspectRatioBox from 'components/shape/aspectRatioBox';
 import LineSwiper from 'components/slider/lineSwiper';
 import { useState } from 'react';
@@ -85,14 +82,11 @@ const Index:NextPage = () => {
         <AspectRatioBox width="250px" style={{backgroundColor:'red'}} aspectRatio={0.5625}>
           첫번째
         </AspectRatioBox>
-        <AspectRatioBox width="250px" style={{backgroundColor:'yellow'}} aspectRatio={0.5625}>
+        <AspectRatioBox width="250px" style={{backgroundColor:'yellow'}} aspectRatio={0.75}>
           두번째
         </AspectRatioBox>
         <AspectRatioBox width="250px" style={{backgroundColor:'green'}} aspectRatio={0.5625}>
           세번째
-        </AspectRatioBox>
-        <AspectRatioBox width="250px" style={{backgroundColor:'magenta'}} aspectRatio={0.5625}>
-          4번째
         </AspectRatioBox>
       </LineSwiper>
     </Box>
