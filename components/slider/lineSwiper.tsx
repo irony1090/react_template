@@ -19,11 +19,11 @@ const LineSwiper:FC<LineSwiperProps> = ({
 }) => {
   const classes = useLineSwiperStyles();
   const boxClass = clsx(classes.box, className)
-  const count = Children.count(children);
-  const index = index_ < 0 ? count-1 : index_ % count;
-
   const items = Children.toArray(children);
+  const count = items.length;
+  const index = index_ < 0 ? count-1 : index_ % count;
   const select = items[index];
+
   
   return (<Box {...boxProps} className={boxClass} >
     <HideBox>{select}</HideBox>

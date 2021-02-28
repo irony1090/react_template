@@ -94,7 +94,7 @@ const Index:NextPage = () => {
 
     <Dialog 
       className={classes.container}
-      open={false} 
+      open={true} 
       scroll="body" 
     >
       
