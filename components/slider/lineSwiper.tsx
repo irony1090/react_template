@@ -41,8 +41,20 @@ export default LineSwiper;
 
 
 const HideBox:FC = ({children}) => {
-  const style:CSSProperties = {opacity: 0};
-  return ( <div style={style} >{children}</div> )
+  // console.log(child)
+  const divRef = useRef<HTMLDivElement>(null);
+  const [style, setStyle] = useState<CSSProperties>({opacity: 0})
+  useEffect(() => {
+    if(!divRef.current) return;
+
+    const {offsetHeight} = divRef.current;
+    setStyle(state => ({
+      ...state,
+      minHeight: offsetHeight
+    }))
+  }, [children])
+  // const style:CSSProperties = {opacity: 0};
+  return ( <div style={style} ><div ref={divRef}>{children}</div></div> )
 }
 
 type ItemProps = {
