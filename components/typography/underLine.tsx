@@ -9,18 +9,18 @@ interface UnderLineProps extends BoxProps {
   color: string,
   size: number
 }
-const useUnderLineStyles = makeStyles(_theme => ({
+const useUnderLineStyles = makeStyles( _theme => ({
   underLine: {
     position: 'absolute',
     width: '100%',
     left: 0,
     bottom: 0,
     zIndex: 1,
-    '&.underLine-bottom': {
-      transform: 'translate(0, 100%)'
+    '&.underLine-top': {
+      transform: 'translate(0, -100%)'
     },
     '&.underLine-center': {
-      transform: 'translate(0, 50%)'
+      transform: 'translate(0, -50%)'
     },
     // '&.underLine-bottom': {
     // }

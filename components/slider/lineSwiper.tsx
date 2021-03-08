@@ -1,9 +1,23 @@
-import { Box, BoxProps, makeStyles } from "@material-ui/core";
+import { Box, BoxProps, ButtonBase, Grid, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import { Children, CSSProperties, FC, useEffect, useRef, useState } from "react";
+import AspectRatioBox from "components/shape/aspectRatioBox";
+import { Children, CSSProperties, FC, useRef, useEffect, useState, MouseEvent } from "react";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 
-interface LineSwiperProps extends BoxProps {
+type LineSwiperDefaultNavigationProps = {
+  onNext?: (e:MouseEvent) => void,
+  onPrev?: (e:MouseEvent) => void
+}
+type LineSwiperCustomizeNavigationProps = {
+  nextComponent?: any,
+  prevComponent?: any
+}
+type LineSwiperNavigationProps = 
+  LineSwiperDefaultNavigationProps & LineSwiperCustomizeNavigationProps;
+
+interface LineSwiperProps extends BoxProps, LineSwiperNavigationProps {
   index: number,
   refresh?: number
 }
@@ -11,10 +25,33 @@ const useLineSwiperStyles = makeStyles(_theme => ({
   box: {
     position: 'relative',
     whiteSpace: 'nowrap'
+  },
+  navBoxLeft: {
+    '&.MuiGrid-container': { width: 'auto' },
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: -60,
+    zIndex: 10,
+    '&:hover .sideButton': {
+      transform: 'translateX(50%)'
+    }
+  },
+  navBoxRight: {
+    '&.MuiGrid-container': { width: 'auto' },
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: -60,
+    zIndex: 10,
+    '&:hover .sideButton': {
+      transform: 'translateX(-50%)'
+    }
   }
 }))
 const LineSwiper:FC<LineSwiperProps> = ({
   children, index:index_, className, refresh=0,
+  onNext, onPrev, nextComponent, prevComponent,
   ...boxProps
 }) => {
   const classes = useLineSwiperStyles();
@@ -24,6 +61,21 @@ const LineSwiper:FC<LineSwiperProps> = ({
   const index = index_ < 0 ? count-1 : index_ % count;
   const select = items[index];
 
+  const nextComponent_ = onNext || nextComponent 
+    ? (
+      <NavBox className={classes.navBoxRight} onClick={onNext}>
+        {nextComponent || <ArrowForwardIosIcon />}
+      </NavBox>
+    )
+    : undefined;
+
+  const prevComponent_ = onPrev || prevComponent 
+    ? (
+      <NavBox className={classes.navBoxLeft} onClick={onPrev}>
+        {prevComponent || <ArrowBackIosIcon />}
+      </NavBox>
+    )
+    : undefined;
   
   return (<Box {...boxProps} className={boxClass} >
     <HideBox>{select}</HideBox>
@@ -34,11 +86,56 @@ const LineSwiper:FC<LineSwiperProps> = ({
           selfKey={i} index={index} count={count}
         >{c}</Item>
     )}
+    {prevComponent_}
+    {nextComponent_}
   </Box>)
 }
 
 export default LineSwiper;
 
+
+interface NavBoxProps extends ArrowButtonProps {
+  className: string,
+}
+const NavBox:FC<NavBoxProps> = ({children, className, onClick}) => {
+  return(
+    <Grid className={className} container direction="column" justify="center" alignItems="center">
+      <Grid item>
+        <ArrowButton onClick={onClick}>{children}</ArrowButton>
+      </Grid>
+    </Grid>
+  )
+}
+
+type ArrowButtonProps = {
+  onClick?: (e: MouseEvent) => void
+}
+const useArrowButtonStyles = makeStyles(theme => ({
+  gridContainer: {
+    width: '100%',
+    height: '100%',
+  },
+  button: {
+    // backgroundColor: 'rgba(255,255,255, 0.25)',
+    borderRadius: theme.spacing(1),
+    transition: 'all .2s'
+  }
+}))
+const ArrowButton: FC<ArrowButtonProps> = ({ children, onClick }) => {
+  const classes = useArrowButtonStyles();
+  const buttonClass = clsx(classes.button, 'sideButton')
+  return (
+    <ButtonBase  className={buttonClass} onClick={onClick}>
+      <AspectRatioBox width="75px" aspectRatio={1}>
+        <Grid container className={classes.gridContainer} justify="center" alignItems="center">
+          <Grid item>
+            {children}
+          </Grid>
+        </Grid>
+      </AspectRatioBox>
+    </ButtonBase>
+  )
+}
 
 const HideBox:FC = ({children}) => {
   // console.log(child)
