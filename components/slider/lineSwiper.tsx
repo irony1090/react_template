@@ -1,6 +1,6 @@
 import { Box, BoxProps, makeStyles } from "@material-ui/core";
 import clsx from "clsx";
-import { Children, CSSProperties, FC } from "react";
+import { Children, CSSProperties, FC, useEffect, useRef, useState } from "react";
 
 
 interface LineSwiperProps extends BoxProps {
