@@ -2,13 +2,6 @@ import { CSSProperties } from "@material-ui/core/styles/withStyles";
 import { DIMENSION_FORM, isNumberForm, isUndeclared, OTHER_THEN_NUMBER } from "./format";
 import moment from 'moment';
 
-const ONE_MINUTE = 60 * 1000,
-  ONE_HOUR = ONE_MINUTE * 60,
-  ONE_DAY = ONE_HOUR * 24,
-  ONE_WEEK = ONE_DAY * 7,
-  ONE_MONTH = ONE_DAY * 30,
-  ONE_YEAR = ONE_DAY * 365;
-
 export const clone = <T>(obj: T):T => 
   JSON.parse(JSON.stringify(obj)) as T;
 
@@ -202,122 +195,7 @@ export const createArr = (startOrEnd:number, end?:number):Array<number> => {
   return list;
 }
 
-export const parseDate = (date:string|Date): Date|undefined =>{
-  if(typeof date == 'string'){
-    const nums:any = date.split(/\D/);
-    return new Date( nums[0]*1, nums[1]-1, nums[2]*1, nums[3]*1, nums[4]*1, nums[5]*1 )
-  }else if( date instanceof Date){
-    return date
-  }else{
-    return undefined;
-  }
-}
 
-type TimeOrDateOption = {
-  timeSeparator?: string,
-  dateSeparator?: string
-}
-export const timeOrDate = (milliseconds:string|number, opt:TimeOrDateOption={}):string => {
-  if(!isNumberForm(milliseconds)) return '알수없음';
-  const d = moment(milliseconds).toDate();
-  // const d: Date|undefined = moment(date).;
-  // if(!d || d.getTime() === NaN)
-  //   return '알수없음';
-
-  let cur = new Date();
-  cur = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate());
-
-  // let diff =  d.getTime() - cur.getTime();
-  const cur_time = cur.getTime();
-  const target_time = d.getTime();
-  // console.log(d);
-  // console.log(`${d.getMonth()}, ${d.getDay()}`)
-  if(cur_time < target_time && target_time > (cur_time+ONE_DAY) ){
-    let hour = '' + d.getHours(),
-    minutes = '' + d.getMinutes();
-    hour = hour.length == 1 ? '0' + hour : hour;
-    minutes = minutes.length == 1 ? '0' + minutes : minutes
-    if(opt.timeSeparator)  
-      return `${hour}${opt.timeSeparator}${minutes}`;
-    else
-      return `${hour}시 ${minutes}분`;
-  }else{
-    let year = d.getFullYear(),
-    month = '' + (d.getMonth() + 1),
-    day =  '' + d.getDate();
-
-    month = month.length == 1 ? '0' + month : month;
-    day = day.length == 1 ? '0' + day : day;
-    if(opt.dateSeparator)
-      return `${year !== cur.getFullYear() ? `${year}${opt.dateSeparator}` : ''}${month}${opt.dateSeparator}${day}`;
-    else
-      return `${year !== cur.getFullYear() ? `${year}년 ` : ''}${month}월 ${day}일` ;
-  }
-  // return '';
-  
-}
-
-type aboutDate_opt ={
-  cur?: Date ,
-  excess?:string,
-  under?:string
-}
-export const aboutDate = (milliseconds:string|number, opt:aboutDate_opt|undefined ): string => {
-  if(!isNumberForm(milliseconds)) return '알수없음';
-  
-  let cur;
-  if(opt)
-    cur = opt.cur;
-  if(!cur) cur = new Date();
-
-
-  const d = moment(milliseconds).toDate();
-
-  const d_long = d.getTime(),
-  cur_long = cur.getTime();
-
-  let diff = cur_long - d_long;
-
-  if(diff > 0){ // 양수. 과거
-    if(opt?.under) return opt.under;
-
-    if(diff > ONE_YEAR){
-      return `${Math.floor(diff / ONE_YEAR)}년 전`
-    }else if(diff > ONE_MONTH){
-      return `${Math.floor(diff / ONE_MONTH)}달 전`
-    }else if(diff > ONE_WEEK){
-      return `${Math.floor(diff / ONE_WEEK)}주일 전`
-    }else if(diff > ONE_DAY){
-      return `${Math.floor(diff / ONE_DAY)}일 전`
-    }else if(diff > ONE_HOUR){
-      return `${Math.floor(diff / ONE_HOUR)}시간 전`
-    }else if(diff > ONE_MINUTE){
-      return `${Math.floor(diff / ONE_MINUTE)}분 전`
-    }else {
-      return '방금전'
-    }
-  }else{  //음수. 미래
-    if(opt?.excess) return opt.excess;
-
-    diff = Math.abs(diff);
-    if(diff > ONE_YEAR){
-      return `${Math.floor(diff / ONE_YEAR)}년 후`
-    }else if(diff > ONE_MONTH){
-      return `${Math.floor(diff / ONE_MONTH)}달 후`
-    }else if(diff > ONE_WEEK){
-      return `${Math.floor(diff / ONE_WEEK)}주일 후`
-    }else if(diff > ONE_DAY){
-      return `${Math.floor(diff / ONE_DAY)}일 후`
-    }else if(diff > ONE_HOUR){
-      return `${Math.floor(diff / ONE_HOUR)}시간 후`
-    }else if(diff > ONE_MINUTE){
-      return `${Math.floor(diff / ONE_MINUTE)}분 후`
-    }else {
-      return '잠시후'
-    }
-  }
-
-}
 
 // const makeProperties = <V, T extends Record<string, V> >(properties: T):T => properties;
 // const makeProperties = <V, K>(properties: Map<K, V>):Map<K, V> => properties
