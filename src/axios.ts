@@ -83,9 +83,12 @@ const defError = (err:AxiosError):DefError<{code:number, message: string}> => {
 const NextAxios = (ctx?:NextPageContext) => {
   if(ctx && ctx.req){
     const clientHeaders = ctx.req.headers;
-    Object
-      .keys(clientHeaders)
-      .forEach( key => Axios.defaults.headers.common[key] = clientHeaders[key] )
+    const {cookie} = clientHeaders
+    if(cookie)
+      Axios.defaults.headers.Cookie = cookie;
+    // Object
+    //   .keys(clientHeaders)
+    //   .forEach( key => Axios.defaults.headers.common[key] = clientHeaders[key] )
   }
   return {
     ...Axios,
