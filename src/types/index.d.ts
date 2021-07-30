@@ -15,6 +15,8 @@ declare module '*.jpg';
 // declare module '*.json';
 declare module '*.svg';
 
+declare var IMP: any;
+
 declare namespace NodeJS {
   interface ProcessEnv {
     NEXT_PUBLIC_ACTIVE: string;
@@ -51,5 +53,6 @@ declare namespace NodeJS {
     NAVER_TOKEN_URL: string;
     NEXT_PUBLIC_NAVER_CLIENT_ID: string;
     NAVER_CLIENT_SECRET: string;
+    NEXT_PUBLIC_NAVER_RETURN_URL: string;
   }
 }

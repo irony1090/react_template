@@ -1,6 +1,5 @@
 const withPlugins = require('next-compose-plugins');
-// const withTM = require('next-transpile-modules')(['recoil', 'set-cookie-parser']);
-const withTM = require('next-transpile-modules')(['recoil']);
+const withTM = require('next-transpile-modules')(['recoil', 'set-cookie-parser']);
 const withImages = require('next-images');
 
 module.exports = withPlugins([

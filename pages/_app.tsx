@@ -63,6 +63,9 @@ const MyApp = (props: AppProps<CommProps>) => {
         <title>ToDoList</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
         {/* <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet" /> */}
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+        <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />

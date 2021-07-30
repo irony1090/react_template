@@ -41,6 +41,7 @@ const KakaoButton:FC = () => {
       redirect_uri
     }
     const requestUrl = `${process.env.NEXT_PUBLIC_KAKAO_AUTH_URL}/oauth/authorize?${toQuery(query, true)}`;
+    // console.log(query, requestUrl);
     saveCurrentPage(router);
     location.href=requestUrl;
   }

@@ -13,6 +13,7 @@
     "clsx": "latest",
     "cross-env": "^7.0.2",
     "env-cmd": "^10.1.0",
+    "firebase": "^8.6.7",
     "moment": "^2.29.1",
     "next": "^9.5.0",
     "next-compose-plugins": "^2.2.1",

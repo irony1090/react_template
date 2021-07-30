@@ -55,7 +55,6 @@ export const isNumberAndPad = ({value, start='', end=''}:NumberAndPad):string|un
 
 
 export const randomInt = (max: number, min: number) => {
-  Math.random() * (max - min);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -97,7 +96,11 @@ export const toQuery = (obj:any, encode?: any):String => {
   return result;
 }
 
-export const getProperty = <T, K extends keyof T>(o: T, name: K): T[K] => o[name];
+export const getProperty = <T, K extends keyof T>(o: T, name: K): T[K]|undefined => {
+  if(!o) return undefined;
+  const val: T[K]|undefined = o[name];
+  return val ? val : undefined;
+}
 
 // getProperty({src:'sss', sss: 'asd'}, 'src');
 export const makeCSSProperties = 

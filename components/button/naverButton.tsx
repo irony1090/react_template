@@ -37,7 +37,7 @@ const NaverButton:FC = () => {
   const router =useRouter();
   const onSubmit = () => {
     const state = randomInt(100, 3333);
-    const redirect_uri = `${process.env.NEXT_PUBLIC_LOCAL}/auth/redirect/naver`;
+    const redirect_uri = `${process.env.NEXT_PUBLIC_NAVER_RETURN_URL}`;
     const query:RequestNaverAuthQuery = {
       response_type: 'code',
       client_id: `${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`,

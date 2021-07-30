@@ -35,7 +35,15 @@ import {defButtonProps} from 'theme/theme'
 import {clone} from 'src/util'
 import AspectRatioBox from 'components/shape/aspectRatioBox';
 import LineSwiper from 'components/slider/lineSwiper';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import KakaoButton from 'components/button/kakaoButton';
+import NaverButton from 'components/button/naverButton';
+import GoogleButton from 'components/button/googleButton';
+import { defError, defSuccess, NextAxios } from 'src/axios';
+import { IamportResponse, RequestPayment } from 'recoilStates/payment';
+
+import firebase from 'firebase';
+import 'firebase/messaging'
 
 const useStyles = makeStyles((theme) =>({
   container: {
@@ -68,10 +76,120 @@ const Index:NextPage = () => {
   // const {list} = useSelector((state:rootState) => state.TodoReducer);
   // const dispatch = useDispatch();
   const [index, setIndex] = useState<number>(0);
+  const [init, setInit] = useState<boolean>(true);
+  useEffect(() => {
+    if(!init) return;
+    setInit(false);
+    if(!IMP) return;
 
+    IMP.init('imp32203738')
+    NextAxios().post('http://localhost:3000/users/sign/in', {
+      identity: "user-1",
+      password: "1234"
+    }).then(res => {
+      console.log('성공');
+    }).catch(err =>{
+      const {data} = defError(err);
+      console.log('실패', data);
+    })
+
+
+    if(!firebase) return;
+
+    const fbConfig = {
+      apiKey: "AIzaSyB0rIZZDP7Ba6ICFo27Nx2ye6CbRF-2HuQ",
+      authDomain: "peng-d67b0.firebaseapp.com",
+      databaseURL: "https://peng-d67b0.firebaseio.com",
+      projectId: "peng-d67b0",
+      storageBucket: "peng-d67b0.appspot.com",
+      messagingSenderId: "347758805174",
+      appId: "1:347758805174:web:494f1515bd832751"
+    };
+
+    // Initialize Firebase
+    // if(Firebase.auth() &&  Firebase.) return ;
+
+    if (!firebase.apps.length)
+      firebase.initializeApp(fbConfig);
+    else 
+      firebase.app();
+    
+
+    const messaging = firebase.messaging();
+    messaging.getToken({vapidKey: 'BPZGx3Nq2Y8uwIYalq48Wk_SYr9ihhPvtykIrtL4mCjvov0KwiVuKUEW3AYglrUgEvY9izAxdQMfLmkZJzQcWV0'})
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    messaging.onMessage((payload) => {
+      console.log(payload.notification.title);
+      console.log(payload.notification.body);
+    })
+
+  })
 
   const onSave = () => 
     setTempList(clone(list))
+
+  const reqPay = () => {
+    NextAxios()
+    .post(`http://localhost:3000/payments/dummy`, {
+      point: 450, 
+      paymentType: "iamport",
+      paymentPg: 'html5_inicis',
+      paymentMethod: 'vcard', // 'vcard' 'vbank',
+      // buyer: {
+      //   refundCode: '88', //은행 코드 https://api.iamport.kr/ 
+      //   refundTitle: '은행명', // 중요하지 않음. 그러나 필수
+      //   refundNumber: '계좌번호',
+      //   refundName: '계좌주'
+      // }
+    })
+    .then(res => {
+      const {data} = defSuccess<RequestPayment>(res)
+      const {histories, uk, title: produtName} = data;
+      const extPayHistory = histories.find(h => h.externalPayment);
+      if(!extPayHistory || !extPayHistory.externalPayment){
+        alert('데이터가 없습니다');
+        return;
+      }
+      const {pg, method, price, buyer } = extPayHistory.externalPayment;
+      if(!buyer){
+        alert('유저 정보가 없습니다');
+        return;
+      }
+      const {name, tel, email} = buyer;
+      
+      IMP.request_pay({
+        pg,
+        pay_method: method,
+        merchant_uid: uk,
+        name: produtName,
+        amount: price,
+        buyer_email: email,
+        buyer_name: name,
+        buyer_tel: tel
+      }, (rsp:IamportResponse) => {
+        console.log(rsp);
+        NextAxios().patch(`http://localhost:3000/payments/${uk}/status`, {
+          isApplyID: rsp.success ? 1 : -2
+        }).then(patchRes => {
+          const {data: patchData} = defSuccess<RequestPayment>(patchRes);
+          console.log(patchData);
+        }).catch(patchErr => {
+          const {data: patchData} = defError(patchErr);
+          console.log(patchData);
+        })
+
+      })
+    }).catch(err => {
+      const {data} = defError(err);
+      console.log(data);
+    })
+
+  }
 
   //   dispatch(todoActions.SET_TEMP_LIST(list))
   
@@ -89,12 +207,18 @@ const Index:NextPage = () => {
           세번째
         </AspectRatioBox>
       </LineSwiper>
+
+      <GoogleButton />
+      <KakaoButton />
+      <NaverButton />
+      <Button onClick={reqPay}>결제 하기</Button>
+
     </Box>
 
 
     <Dialog 
       className={classes.container}
-      open={true} 
+      open={false} 
       scroll="body" 
     >
       
